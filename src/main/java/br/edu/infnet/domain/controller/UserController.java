@@ -7,12 +7,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = {"/users"})
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping(path = "/all-users")
+    public ResponseEntity listUsers() {
+        List<User> list = (List<User>) userRepository.findAll();
+
+        return ResponseEntity.ok().body(list);
+    }
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity getById(@PathVariable Integer id) {
